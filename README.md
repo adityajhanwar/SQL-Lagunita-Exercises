@@ -2,8 +2,6 @@
 # Databses: DB5 SQL
 ## Stanford Lagunita Online
 
---
-
 ### Aditya Jhanwar
 ### ajhanwar@berkeley.edu
 
