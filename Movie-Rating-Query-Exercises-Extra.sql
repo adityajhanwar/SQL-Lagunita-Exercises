@@ -46,8 +46,62 @@ order by rev1.name;
 -- 6. For each rating that is the lowest (fewest stars) currently in the database, return 
 --    the reviewer name, movie title, and number of stars. 
 
+select name, title, stars
+from Movie join Rating using(mID) join Reviewer using(rID)
+where stars = (select min(stars) from rating);
 
+-- 7. List movie titles and average ratings, from highest-rated to lowest-rated. If two 
+--    or more movies have the same average rating, list them in alphabetical order. 
 
+select title, avg(stars)
+from movie join rating using(mid)
+group by mid
+order by avg(stars) desc, title;
 
+-- 8. Find the names of all reviewers who have contributed three or more ratings. 
 
+select name
+from reviewer join rating using(rid) 
+group by rid
+having count(*) >= 3;
+
+-- 9. Some directors directed more than one movie. For all such directors, return the 
+--    titles of all movies directed by them, along with the director name. Sort by 
+--    director name, then movie title.
+
+select title, director
+from movie where director in (select director from movie group by director having count(*) > 1)
+order by director, title;
+
+-- 10. Find the movie(s) with the highest average rating. Return the movie title(s) and average rating.
+
+select title, avg(stars)
+from movie join rating rating using(mid)
+group by mid 
+having avg(stars) = (select avg(stars)
+                    from rating
+                    group by mid
+                    order by avg(stars) desc
+                    limit 1);
+
+-- 11. Find the movie(s) with the lowest average rating. Return the movie title(s) and average rating.
+
+select title, avg(stars)
+from movie join rating rating using(mid)
+group by mid 
+having avg(stars) = (select avg(stars)
+                    from rating
+                    group by mid
+                    order by avg(stars) asc
+                    limit 1);
+
+-- 12. For each director, return the director's name together with the title(s) of the movie(s) they 
+--     directed that received the highest rating among all of their movies, and the value of that rating. 
+--     Ignore movies whose director is NULL. 
+
+select director, title, stars
+from movie join rating using(mid)
+where director is not null
+group by director
+having max(stars);
 
