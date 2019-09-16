@@ -16,20 +16,26 @@ where director = 'Steven Spielberg';
 select distinct year
 from movie join rating using(mID)
 where stars >= 4
-order by year;
+order by year asc;
 
 -- 3. Find the titles of all movies that have no ratings. 
 
+-- Using subquery:
 select title
 from movie
 where mid not in (select mid from rating);
+
+-- Using join:
+select title
+from Movie left join Rating using(mID)
+where rID is null;
 
 -- 4. Some reviewers didn't provide a date with their rating. Find the names of all reviewers who have ratings
 --    with a NULL value for the date. 
 
 select name
-from reviewer join rating using(rid)
-where ratingdate is null;
+from Rating join Reviewer using(rID)
+where ratingDate is null;
 
 -- 5. Write a query to return the ratings data in a more readable format: reviewer name, movie title, stars, 
 --    and ratingDate. Also, sort the data, first by reviewer name, then by movie title, and lastly by 
@@ -42,20 +48,12 @@ order by name, title, stars;
 -- 6. For all cases where the same reviewer rated the same movie twice and gave it a higher rating the 
 --    second time, return the reviewer's name and the title of the movie. 
 
--- Using join:
-select name, title
-from reviewer join
-(select *
-from rating a join rating b using(rid)
-where a.mid = b.mid and a.stars < b.stars and a.ratingdate < b.ratingdate) twice
-using(rid) join movie using(mid);
-
--- Using correlated subquery:
-select name, title
-from reviewer join
-(select * from rating r1 where exists(select * from rating r2 where r1.rid = r2.rid and r1.mid = r2.mid and
-					r1.stars < r2.stars and r1.ratingdate < r2.ratingdate)) twice
-using(rid) join movie using(mid);
+select r.name, title
+from Rating r1 
+	join Rating r2 on r1.mID = r2.mID 
+	join Movie m on r1.mID = m.mID 
+	join Reviewer r on r1.rID = r.rID
+where r1.rID = r2.rID and r2.stars > r1.stars and r2.ratingDate > r1.ratingDate;
 
 -- 7. For each movie that has at least one rating, find the highest number of stars that movie received. 
 --    Return the movie title and number of stars. Sort by movie title. 
