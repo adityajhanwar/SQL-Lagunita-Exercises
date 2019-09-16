@@ -123,9 +123,9 @@ having avg(stars) = (select avg(stars)
 
 select distinct director, title, stars
 from (Movie join Rating using(mID)) a
-where exists (select *
-              from (Movie join Rating using(mID)) b
-              where director is not NULL 
-              group by director
-              having max(stars) = a.stars and
-              director = a.director)					
+where director is not NULL and 
+	exists (select *
+            from (Movie join Rating using(mID)) b
+            group by director
+            having max(stars) = a.stars and
+            director = a.director)					
