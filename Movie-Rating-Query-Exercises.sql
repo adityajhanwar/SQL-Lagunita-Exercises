@@ -66,7 +66,7 @@ order by title;
 -- 8. For each movie, return the title and the 'rating spread', that is, the difference between highest and 
 --    lowest ratings given to that movie. Sort by rating spread from highest to lowest, then by movie title. 
 
-select title, max(stars)-min(stars) as 'rating_spread'
+select title, max(stars) - min(stars) as 'rating_spread'
 from movie join rating using(mid)
 group by title
 order by rating_spread desc, title;
@@ -81,7 +81,7 @@ from (select avg(stars) avgEach
 		from Rating join Movie using(mID)
 		where year < 1980
 		group by mID) before,
-	(select avg(stars) avgEach
+	 (select avg(stars) avgEach
 		from Rating join Movie using(mID)
 		where year > 1980
 		group by mID) after;
