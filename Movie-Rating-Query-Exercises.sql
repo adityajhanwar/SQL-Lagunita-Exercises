@@ -76,16 +76,12 @@ order by rating_spread desc, title;
 --    of those averages for movies before 1980 and movies after. Don't just calculate the overall average rating
 --    before and after 1980.)
 
-select
-(select avg(avg_stars) as avg_before
-from (select title, avg(stars) as avg_stars
-      from movie join rating using(mid)
-      where year < 1980
-      group by mid) before)
--
-(select avg(avg_stars) as avg_after
-from (select title, avg(stars) as avg_stars
-      from movie join rating using(mid)
-      where year > 1980
-      group by mid) after)
-
+select avg(before.avgEach) - avg(after.avgEach) as 'difference'
+from (select avg(stars) avgEach
+		from Rating join Movie using(mID)
+		where year < 1980
+		group by mID) before,
+	(select avg(stars) avgEach
+		from Rating join Movie using(mID)
+		where year > 1980
+		group by mID) after;
