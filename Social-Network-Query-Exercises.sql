@@ -1,6 +1,6 @@
 /*
  * Social-Network-Query-Exercises.sql
- * 5/23/19
+ * 9/16/19
  * Aditya Jhanwar
  * My solutions for Stanford Lagunita's SQL Database Course, exercise set 'SQL Social-Network Query Exercises'
  */
@@ -119,11 +119,3 @@ from Likes a
     join Likes b on a.ID2 = b.ID2
     join Highschooler on a.ID2 = ID
 where a.ID1 < b.ID1
-
-
-
-
-
-
-
-

@@ -1,6 +1,6 @@
 /*
  * Movie-Rating-Query-Exercises-Extra.sql
- * 5/23/19
+ * 9/15/19
  * Aditya Jhanwar
  * My solutions for Stanford Lagunita's SQL Database Course, exercise set 
  *  'SQL Movie-Rating Query Exercises: Extra'
