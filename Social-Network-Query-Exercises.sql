@@ -47,6 +47,13 @@ from Likes l
 where exists (select * from Likes where l.ID1 = ID2 and l.ID2 = ID1) and
     h1.name < h2.name;
 	
+-- Using join:
+select h1.name, h1.grade, h2.name, h2.grade
+from Likes l1, Likes l2, Highschooler h1, Highschooler h2
+where (l1.ID1 = h1.ID and l1.ID2 = h2.ID) and
+    (l2.ID1 = h2.ID and l2.ID2 = h1.ID) and
+    h1.name < h2.name;
+	
 -- 4. Find all students who do not appear in the Likes table (as a student who likes or is 
 --    liked) and return their names and grades. Sort by grade, then by name within each grade. 
 
@@ -59,6 +66,22 @@ order by grade asc, name asc;
 --    whom B likes (that is, B does not appear as an ID1 in the Likes table), return A and 
 --    B's names and grades. 
 
+-- Using join:
+select h1.name, h1.grade, h2.name, h2.grade
+from Likes l1 
+    left join Likes l2 on l1.ID2 = l2.ID1
+    join Highschooler h1 on l1.ID1 = h1.ID
+    join highschooler h2 on l1.ID2 = h2.ID
+where l2.ID2 is null;
+
+-- Using subquery:
+select h1.name, h1.grade, h2.name, h2.grade
+from Likes
+    join Highschooler h1 on ID1 = h1.ID
+    join highschooler h2 on ID2 = h2.ID
+where ID2 not in (select ID1 from Likes);
+
+-- 6. 
 
 
 
