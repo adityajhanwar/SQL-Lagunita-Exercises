@@ -96,7 +96,12 @@ order by h1.grade, h1.name;
 --    have a friend C in common (who can introduce them!). For all such trios, return the 
 --    name and grade of A, B, and C. 
 
-...
+select h1.name, h1.grade, h2.name, h2.grade, h3.name, h3.grade
+from Likes, Highschooler as h1, Highschooler as h2, Highschooler as h3
+where (Likes.ID1 = h1.ID and Likes.ID2 = h2.ID) and
+      h2.ID not in (select ID2 from Friend where h1.ID = ID1) and
+      h3.ID in (select ID2 from Friend where h1.ID = ID1) and
+      h3.ID in (select ID2 from Friend where h2.ID = ID1);
 
 -- 8. Find the difference between the number of students in the school and the number of 
 --    different first names. 
