@@ -81,7 +81,45 @@ from Likes
     join highschooler h2 on ID2 = h2.ID
 where ID2 not in (select ID1 from Likes);
 
--- 6. 
+-- 6. Find names and grades of students who only have friends in the same grade. Return the 
+--    result sorted by grade, then by name within each grade. 
+
+select h1.name, h1.grade
+from Friend
+    join Highschooler h1 on h1.ID = ID1
+    join Highschooler h2 on h2.ID = ID2
+group by ID1
+having min(h2.grade) = max(h2.grade)
+order by h1.grade, h1.name;
+
+-- 7. For each student A who likes a student B where the two are not friends, find if they 
+--    have a friend C in common (who can introduce them!). For all such trios, return the 
+--    name and grade of A, B, and C. 
+
+...
+
+-- 8. Find the difference between the number of students in the school and the number of 
+--    different first names. 
+
+select count(*) - count(distinct name) as 'difference'
+from Highschooler;
+
+-- 9. Find the name and grade of all students who are liked by more than one other student. 
+
+-- Using aggregation:
+select name, grade
+from Highschooler 
+    join Likes on ID = ID2
+group by ID2
+having count(ID1) > 1;
+
+-- Without using aggregation:
+select distinct name, grade
+from Likes a 
+    join Likes b on a.ID2 = b.ID2
+    join Highschooler on a.ID2 = ID
+where a.ID1 < b.ID1
+
 
 
 
