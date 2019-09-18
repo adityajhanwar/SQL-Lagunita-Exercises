@@ -21,7 +21,7 @@ select h1.name, h1.grade
 from Friend, Highschooler h1, Highschooler h2
 where ID1 = h1.ID and
     ID2 = h2.ID
-group by ID1
+group by ID1, h1.grade
 having sum(h2.grade = h1.grade) = 0;
 
 -- Without using 'group by':
