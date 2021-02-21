@@ -26,11 +26,11 @@ where a_b.ID2 = b_c.ID1 and
 select name, grade
 from Highschooler
 where ID not in (
-  select ID1
+	select ID1
 	from Friend, Highschooler a, Highschooler b
-  where ID1 = a.ID and
-    ID2 = b.ID and
-		a.grade = b.grade);
+  	where ID1 = a.ID and
+	      ID2 = b.ID and
+              a.grade = b.grade);
 
 -- 3. What is the average number of friends per student? (Your result should be
 --    just one number.)
