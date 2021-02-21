@@ -56,20 +56,18 @@ from
 (select count(ID1) as num
  from Friend
  where ID2 = (select ID
-		      	  from Highschooler
-		      	  where name = 'Cassandra')) as num_friends,
+              from Highschooler
+	      where name = 'Cassandra')) as num_friends,
 (select count(ID2) as num
  from Friend
- where ID1 in (
-   select ID1
-   from Friend
-   where ID2 = (select ID
-                from Highschooler
-			 	        where name = 'Cassandra')) and
+ where ID1 in (select ID1
+   	       from Friend
+   	       where ID2 = (select ID
+                	    from Highschooler
+	        	    where name = 'Cassandra')) and
         ID2 != (select ID
                 from Highschooler
                 where name = 'Cassandra')) as num_friends_friends
-
 
 -- 5. Find the name and grade of the student(s) with the greatest
 --    number of friends.
@@ -78,9 +76,8 @@ select name, grade
 from Friend, highschooler
 where ID = ID1
 group by ID
-having count(ID2) = (
-	select max(num_friends) from (
-		select count(ID2) as num_friends
-		from Friend
-		group by ID1) as friends_count
+having count(ID2) = (select max(num_friends) from (
+		     select count(ID2) as num_friends
+		     from Friend
+		     group by ID1) as friends_count
 	);
