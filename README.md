@@ -5,5 +5,5 @@
 ### Aditya Jhanwar
 ### ajhanwar@berkeley.edu
 
-The following repository consists of all my work and solutions for the exercise sets of [DB5](https://lagunita.stanford.edu/courses/DB/SQL/SelfPaced/course/).
+The following repository consists of all my work and solutions (including thought processes and alternative solutions) for the exercise sets of StanfordOnline's *Databases: Relational Databases and SQL* available on [edX](www.edx.org)
 
