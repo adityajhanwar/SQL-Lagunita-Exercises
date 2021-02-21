@@ -30,8 +30,7 @@ where ID not in (
 	from Friend, Highschooler a, Highschooler b
   where ID1 = a.ID and
     ID2 = b.ID and
-		a.grade = b.grade
-  );
+		a.grade = b.grade);
 
 -- 3. What is the average number of friends per student? (Your result should be
 --    just one number.)
@@ -39,7 +38,7 @@ where ID not in (
 select avg(num_friends) as avg_friends_per_student from (
 	select count(ID2) as num_friends
 	from Friend
-	group by ID1) as friends_count
+	group by ID1) as friends_count;
 
 -- 4. Find the number of students who are either friends with Cassandra or are
 --    friends of friends of Cassandra. Do not count Cassandra, even though
@@ -67,7 +66,7 @@ from
 	        	    where name = 'Cassandra')) and
         ID2 != (select ID
                 from Highschooler
-                where name = 'Cassandra')) as num_friends_friends
+                where name = 'Cassandra')) as num_friends_friends;
 
 -- 5. Find the name and grade of the student(s) with the greatest
 --    number of friends.
@@ -79,5 +78,4 @@ group by ID
 having count(ID2) = (select max(num_friends) from (
 		     select count(ID2) as num_friends
 		     from Friend
-		     group by ID1) as friends_count
-	);
+		     group by ID1) as friends_count);
