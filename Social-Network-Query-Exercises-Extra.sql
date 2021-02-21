@@ -79,3 +79,4 @@ having count(ID2) = (select max(num_friends) from (
 		     select count(ID2) as num_friends
 		     from Friend
 		     group by ID1) as friends_count);
+
